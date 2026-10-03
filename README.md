@@ -107,6 +107,3 @@ Las variables sensibles se almacenan en `.env`, excluido del repositorio mediant
 
 <p align="center">
   🔐 Express Mongo Auth
-  <br/>
-  Desarrollo de aplicaciones seguras
-</p>
