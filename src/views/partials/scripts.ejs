@@ -1,0 +1,24 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="/js/auth.js"></script>
+<script>
+    // Mostrar / ocultar contraseña
+    document.querySelectorAll('.toggle-password').forEach(icon => {
+        icon.addEventListener('click', () => {
+            const input = document.getElementById(icon.dataset.target);
+            const show = input.type === 'password';
+            input.type = show ? 'text' : 'password';
+            icon.textContent = show ? 'visibility_off' : 'visibility';
+        });
+    });
+
+    // Navbar: ocultar links de admin a quien no sea admin y botón de salir
+    if (!getRoles().includes('admin')) {
+        document.querySelectorAll('.admin-only').forEach(el => { el.style.display = 'none'; });
+    }
+    document.querySelectorAll('.logout-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            logout();
+        });
+    });
+</script>

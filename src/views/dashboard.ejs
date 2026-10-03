@@ -1,0 +1,244 @@
+<%- include('partials/head', { title: 'Dashboard', bodyClass: 'app-page' }) %>
+<%- include('partials/navbar') %>
+
+<div id="app" style="display: none;">
+
+    <%- include('partials/banner', { title: 'Bienvenido', subtitle: 'Aquí están tus datos y todo un universo de videojuegos por explorar.' }) %>
+
+    <div class="container page-container">
+
+        <!-- Datos del usuario -->
+        <h2 class="section-title">Tu perfil de jugador</h2>
+        <div class="row">
+            <div class="col s12 m4">
+                <div class="card player-card">
+                    <div class="card-content">
+                        <div class="player-avatar" id="playerAvatar">?</div>
+                        <p class="player-name" id="playerName">Jugador</p>
+                        <span class="badge-role" id="playerRole">user</span>
+                        <p class="player-level" id="playerLevel"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m8">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">Tus datos</span>
+                        <ul class="collection" id="dataList"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mundos con imágenes -->
+        <h2 class="section-title">Mundos y leyendas</h2>
+        <div class="row">
+            <div class="col s12 m4">
+                <div class="img-card" style="background-image: url('/img/guerrero.jpg');">
+                    <div class="caption">
+                        <h5>Héroes de otros universos</h5>
+                        <p>Armaduras, espadas y armas: cada juego tiene a sus guerreros.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m4">
+                <div class="img-card" style="background-image: url('/img/mundo.jpg');">
+                    <div class="caption">
+                        <h5>Mundos por explorar</h5>
+                        <p>Islas flotantes, cascadas y bosques: el mapa también es un personaje.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m4">
+                <div class="img-card" style="background-image: url('/img/cazador.jpg');">
+                    <div class="caption">
+                        <h5>El cazador de monstruos</h5>
+                        <p>Geralt de Rivia, protagonista de la saga The Witcher.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Géneros -->
+        <h2 class="section-title">Géneros de videojuegos</h2>
+        <div class="row">
+            <div class="col s12 m6 l4">
+                <div class="card genre-card">
+                    <div class="card-content">
+                        <i class="material-icons">sports_esports</i>
+                        <h5>Acción</h5>
+                        <p>Reflejos, combate y ritmo rápido. Aquí entran los shooters y los juegos de pelea.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m6 l4">
+                <div class="card genre-card">
+                    <div class="card-content">
+                        <i class="material-icons">shield</i>
+                        <h5>RPG</h5>
+                        <p>Subes de nivel, personalizas a tu héroe y tomas decisiones que cambian la historia.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m6 l4">
+                <div class="card genre-card">
+                    <div class="card-content">
+                        <i class="material-icons">explore</i>
+                        <h5>Aventura</h5>
+                        <p>Exploración, puzles y narrativa. El viaje importa tanto como el destino.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m6 l4">
+                <div class="card genre-card">
+                    <div class="card-content">
+                        <i class="material-icons">military_tech</i>
+                        <h5>Battle Royale</h5>
+                        <p>Muchos jugadores, un solo ganador. El mapa se cierra y solo queda uno en pie.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m6 l4">
+                <div class="card genre-card">
+                    <div class="card-content">
+                        <i class="material-icons">extension</i>
+                        <h5>Estrategia</h5>
+                        <p>Planificar, administrar recursos y anticipar al rival para ganar la partida.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m6 l4">
+                <div class="card genre-card">
+                    <div class="card-content">
+                        <i class="material-icons">auto_awesome</i>
+                        <h5>Indie</h5>
+                        <p>Equipos pequeños con ideas originales que a veces superan a los grandes estudios.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Línea del tiempo -->
+        <h2 class="section-title">Hitos de los videojuegos</h2>
+        <div class="card">
+            <div class="card-content">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span class="timeline-year">1972</span>
+                        <h6>Pong</h6>
+                        <p>El arcade de Atari que convirtió los videojuegos en un negocio.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-year">1984</span>
+                        <h6>Tetris</h6>
+                        <p>Creado por Alekséi Pázhitnov, se volvió un clásico en todas las plataformas.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-year">1985</span>
+                        <h6>Super Mario Bros.</h6>
+                        <p>Nintendo definió el género de plataformas en la NES.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-year">1993</span>
+                        <h6>DOOM</h6>
+                        <p>Ayudó a popularizar los shooters en primera persona.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-year">2011</span>
+                        <h6>Minecraft</h6>
+                        <p>Su lanzamiento oficial; hoy es uno de los juegos más vendidos de la historia.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-year">2015</span>
+                        <h6>The Witcher 3: Wild Hunt</h6>
+                        <p>El RPG de CD Projekt RED que elevó el estándar de los mundos abiertos.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-year">2017</span>
+                        <h6>Fortnite</h6>
+                        <p>Se hizo famoso por su Battle Royale y por mezclar personajes de muchas franquicias.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Datos curiosos -->
+        <h2 class="section-title">Datos curiosos</h2>
+        <ul class="collapsible">
+            <li>
+                <div class="collapsible-header"><i class="material-icons">help_outline</i>¿Mario siempre se llamó Mario?</div>
+                <div class="collapsible-body"><span>No. Apareció por primera vez en Donkey Kong (1981) con el nombre "Jumpman" y era carpintero, no fontanero.</span></div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="material-icons">help_outline</i>¿Quién creó Tetris?</div>
+                <div class="collapsible-body"><span>Alekséi Pázhitnov, un programador soviético, lo creó en 1984. Su versión en Game Boy lo hizo mundialmente famoso.</span></div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="material-icons">help_outline</i>¿Qué tan grande es Minecraft?</div>
+                <div class="collapsible-body"><span>Es considerado uno de los videojuegos más vendidos de todos los tiempos, y se usa incluso en educación.</span></div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="material-icons">help_outline</i>¿Qué es un crossover?</div>
+                <div class="collapsible-body"><span>Cuando personajes de distintas franquicias comparten un mismo juego. Fortnite lo hizo famoso: Doom Slayer y Geralt aparecen en la misma ilustración.</span></div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="material-icons">help_outline</i>¿De qué trata The Witcher?</div>
+                <div class="collapsible-body"><span>Está basada en las novelas del escritor polaco Andrzej Sapkowski y sigue a Geralt, un cazador de monstruos.</span></div>
+            </li>
+        </ul>
+
+    </div>
+
+    <div class="site-footer">Pixel Realm &middot; Proyecto de laboratorio &middot; Express + MongoDB + JWT</div>
+</div>
+
+<%- include('partials/scripts') %>
+<script>
+    function fmt(date) {
+        return new Date(date).toLocaleDateString('es-PE');
+    }
+
+    async function load() {
+        try {
+            const u = await apiFetch('/api/users/me');
+
+            document.getElementById('bannerTitle').textContent = `Bienvenido, ${u.name}`;
+            document.getElementById('playerAvatar').textContent = (u.name || '?').charAt(0).toUpperCase();
+            document.getElementById('playerName').textContent = `${u.name} ${u.lastName}`;
+            document.getElementById('playerRole').textContent = u.roles.join(', ');
+            document.getElementById('playerLevel').textContent = `Nivel ${u.age}`;
+
+            const rows = [
+                ['Email', u.email],
+                ['Teléfono', u.phoneNumber],
+                ['Fecha de nacimiento', fmt(u.birthdate)],
+                ['Edad', `${u.age} años`],
+                ['Dirección', u.address || '—'],
+                ['Rol', u.roles.join(', ')],
+                ['Registrado el', fmt(u.createdAt)]
+            ];
+
+            const list = document.getElementById('dataList');
+            rows.forEach(([label, value]) => {
+                const li = document.createElement('li');
+                li.className = 'collection-item';
+                const b = document.createElement('b');
+                b.textContent = label + ': ';
+                li.appendChild(b);
+                li.appendChild(document.createTextNode(value));
+                list.appendChild(li);
+            });
+        } catch (err) {
+            M.toast({ html: err.message, classes: 'red' });
+        }
+    }
+
+    // Solo usuarios logueados con rol user (o superior)
+    if (requireAuth(['user', 'admin'])) {
+        document.getElementById('app').style.display = 'block';
+        M.Collapsible.init(document.querySelectorAll('.collapsible'));
+        load();
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<%- include('partials/head', { title: 'Iniciar sesión', bodyClass: 'auth-page' }) %>
+
+<div class="auth-wrapper">
+    <div class="auth-hero">
+        <h1>Tu aventura comienza aquí</h1>
+        <p>Inicia sesión y explora el universo de los videojuegos: géneros, leyendas y mundos por descubrir.</p>
+        <div class="chips-row">
+            <span class="game-chip"><i class="material-icons">sports_esports</i> Acción</span>
+            <span class="game-chip"><i class="material-icons">shield</i> RPG</span>
+            <span class="game-chip"><i class="material-icons">explore</i> Aventura</span>
+            <span class="game-chip"><i class="material-icons">groups</i> Multijugador</span>
+        </div>
+    </div>
+
+    <div class="card auth-card">
+        <div class="card-content">
+            <span class="card-title center-align">Iniciar sesión</span>
+
+            <form id="signInForm" novalidate>
+                <div class="input-field">
+                    <i class="material-icons prefix">email</i>
+                    <input id="email" type="email" required>
+                    <label for="email">Email</label>
+                </div>
+
+                <div class="input-field has-toggle">
+                    <i class="material-icons prefix">lock</i>
+                    <input id="password" type="password" required>
+                    <label for="password">Contraseña</label>
+                    <i class="material-icons toggle-password" data-target="password">visibility</i>
+                </div>
+
+                <button class="btn waves-effect waves-light full-width" type="submit">Ingresar</button>
+            </form>
+
+            <p class="center-align auth-footer">¿No tienes cuenta? <a href="/signUp">Regístrate</a></p>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/scripts') %>
+<script>
+    // Si ya hay sesión válida, ir directo al dashboard
+    if (isTokenValid()) redirectByRole();
+
+    document.getElementById('signInForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+
+        if (!email || !password) {
+            M.toast({ html: 'Ingresa tu email y contraseña', classes: 'red' });
+            return;
+        }
+
+        try {
+            const { token } = await apiFetch('/api/auth/signIn', {
+                method: 'POST',
+                body: JSON.stringify({ email, password })
+            });
+            setToken(token);
+            redirectByRole();
+        } catch (err) {
+            M.toast({ html: err.message, classes: 'red' });
+        }
+    });
+</script>
+</body>
+</html>

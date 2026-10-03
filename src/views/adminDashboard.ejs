@@ -1,0 +1,180 @@
+<%- include('partials/head', { title: 'Dashboard Admin', bodyClass: 'app-page' }) %>
+<%- include('partials/navbar') %>
+
+<div id="app" style="display: none;">
+
+    <%- include('partials/banner', { title: 'Panel de administrador', subtitle: 'Gestiona a todos los jugadores registrados en Pixel Realm.' }) %>
+
+    <div class="container page-container">
+
+        <!-- Estadísticas -->
+        <div class="row">
+            <div class="col s6 m3">
+                <div class="card stat-card">
+                    <div class="card-content">
+                        <i class="material-icons">groups</i>
+                        <div class="stat-number" id="statTotal">0</div>
+                        <div class="stat-label">Jugadores</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col s6 m3">
+                <div class="card stat-card">
+                    <div class="card-content">
+                        <i class="material-icons">admin_panel_settings</i>
+                        <div class="stat-number" id="statAdmins">0</div>
+                        <div class="stat-label">Admins</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col s6 m3">
+                <div class="card stat-card">
+                    <div class="card-content">
+                        <i class="material-icons">person</i>
+                        <div class="stat-number" id="statUsers">0</div>
+                        <div class="stat-label">Usuarios</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col s6 m3">
+                <div class="card stat-card">
+                    <div class="card-content">
+                        <i class="material-icons">event</i>
+                        <div class="stat-number" id="statLast" style="font-size: 1.4rem;">—</div>
+                        <div class="stat-label">Último registro</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla -->
+        <h2 class="section-title">Jugadores registrados</h2>
+        <div class="card">
+            <div class="card-content">
+                <div style="overflow-x: auto;">
+                    <table class="striped highlight">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Rol</th>
+                                <th>Fecha de registro</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="site-footer">Pixel Realm &middot; Proyecto de laboratorio &middot; Express + MongoDB + JWT</div>
+</div>
+
+<!-- Modal con la información de un usuario -->
+<div id="userModal" class="modal">
+    <div class="modal-content">
+        <h5>Información del usuario</h5>
+        <ul class="collection" id="modalList"></ul>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect btn-flat">Cerrar</a>
+    </div>
+</div>
+
+<%- include('partials/scripts') %>
+<script>
+    function fmt(date) {
+        return new Date(date).toLocaleDateString('es-PE');
+    }
+
+    function td(text) {
+        const cell = document.createElement('td');
+        cell.textContent = text;
+        return cell;
+    }
+
+    let modal;
+
+    async function showUser(id) {
+        try {
+            const u = await apiFetch(`/api/users/${id}`);
+            const rows = [
+                ['Nombre', `${u.name} ${u.lastName}`],
+                ['Email', u.email],
+                ['Teléfono', u.phoneNumber],
+                ['Fecha de nacimiento', fmt(u.birthdate)],
+                ['Edad', `${u.age} años`],
+                ['Dirección', u.address || '—'],
+                ['Foto de perfil', u.url_profile || '—'],
+                ['Rol', u.roles.join(', ')],
+                ['Registrado el', fmt(u.createdAt)]
+            ];
+
+            const list = document.getElementById('modalList');
+            list.innerHTML = '';
+            rows.forEach(([label, value]) => {
+                const li = document.createElement('li');
+                li.className = 'collection-item';
+                const b = document.createElement('b');
+                b.textContent = label + ': ';
+                li.appendChild(b);
+                li.appendChild(document.createTextNode(value));
+                list.appendChild(li);
+            });
+
+            modal.open();
+        } catch (err) {
+            M.toast({ html: err.message, classes: 'red' });
+        }
+    }
+
+    async function load() {
+        try {
+            const users = await apiFetch('/api/users');
+
+            // Estadísticas
+            const admins = users.filter(u => u.roles.includes('admin')).length;
+            document.getElementById('statTotal').textContent = users.length;
+            document.getElementById('statAdmins').textContent = admins;
+            document.getElementById('statUsers').textContent = users.length - admins;
+            if (users.length > 0) {
+                const last = users.reduce((a, b) => new Date(a.createdAt) > new Date(b.createdAt) ? a : b);
+                document.getElementById('statLast').textContent = fmt(last.createdAt);
+            }
+
+            // Tabla
+            const tbody = document.getElementById('usersBody');
+            users.forEach(u => {
+                const tr = document.createElement('tr');
+                tr.appendChild(td(`${u.name} ${u.lastName}`));
+                tr.appendChild(td(u.email));
+                tr.appendChild(td(u.roles.join(', ')));
+                tr.appendChild(td(fmt(u.createdAt)));
+
+                const actions = document.createElement('td');
+                const btn = document.createElement('button');
+                btn.className = 'btn-small waves-effect waves-light';
+                btn.textContent = 'Ver';
+                btn.addEventListener('click', () => showUser(u.id));
+                actions.appendChild(btn);
+                tr.appendChild(actions);
+
+                tbody.appendChild(tr);
+            });
+        } catch (err) {
+            M.toast({ html: err.message, classes: 'red' });
+        }
+    }
+
+    // Solo accesible si el token incluye el rol admin
+    if (requireAuth(['admin'])) {
+        modal = M.Modal.init(document.getElementById('userModal'));
+        document.getElementById('app').style.display = 'block';
+        load();
+    }
+</script>
+</body>
+</html>
